@@ -1,36 +1,88 @@
 <!DOCTYPE html>
 <html>
-<head><link rel="stylesheet" href="css/style.css"></head>
+<head>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
 <body>
+
 <div class="container">
-<h2>Atendimento</h2>
 
-<input id="nome" placeholder="Nome">
-<input id="cpf" placeholder="CPF">
+  <h2>Atendimento</h2>
 
-<select id="tipo">
-  <option>Convenio</option>
-  <option>Particular</option>
-</select>
+  <input id="nome" placeholder="Nome">
+  <input id="cpf" placeholder="CPF">
 
-<input type="file" id="foto">
+  <select id="tipo">
+    <option>Convenio</option>
+    <option>Particular</option>
+  </select>
 
-<button onclick="cadastrar()">Cadastrar</button>
+  <input type="file" id="foto">
+
+  <button onclick="cadastrar()">Cadastrar</button>
+
 </div>
 
 <script>
-function cadastrar(){
- fetch("http://localhost:3000/atendimento",{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body: JSON.stringify({
-    nome: nome.value,
-    cpf: cpf.value,
-    tipo: tipo.value
+
+function cadastrar() {
+
+  const nome = document.getElementById("nome").value;
+  const cpf = document.getElementById("cpf").value;
+  const tipo = document.getElementById("tipo").value;
+
+  if (!nome || !cpf) {
+    alert("Preencha o nome e o CPF.");
+    return;
+  }
+
+  fetch("http://localhost:3000/atendimento", {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+      nome: nome,
+      cpf: cpf,
+      tipo: tipo
+    })
+
   })
- });
- alert("Paciente enviado para triagem");
+
+  .then(response => {
+
+    if (!response.ok) {
+      throw new Error("Erro ao cadastrar paciente.");
+    }
+
+    return response.json();
+
+  })
+
+  .then(data => {
+
+    alert("Paciente enviado para triagem");
+
+    // Redireciona para a página de triagem
+    window.location.href = "triagem.html";
+
+  })
+
+  .catch(error => {
+
+    console.error("Erro:", error);
+
+    alert("Erro ao cadastrar o paciente.");
+
+  });
+
 }
+
 </script>
+
 </body>
 </html>
