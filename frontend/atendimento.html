@@ -1,109 +1,36 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Atendimento</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-
+<html>
+<head><link rel="stylesheet" href="css/style.css"></head>
 <body>
-
 <div class="container">
+<h2>Atendimento</h2>
 
-  <h2>Atendimento</h2>
+<input id="nome" placeholder="Nome">
+<input id="cpf" placeholder="CPF">
 
-  <input id="nome" placeholder="Nome">
+<select id="tipo">
+  <option>Convenio</option>
+  <option>Particular</option>
+</select>
 
-  <input id="cpf" placeholder="CPF">
+<input type="file" id="foto">
 
-  <select id="tipo">
-    <option value="Convenio">Convenio</option>
-    <option value="Particular">Particular</option>
-  </select>
-
-  <input type="file" id="foto">
-
-  <button id="btnCadastrar" onclick="cadastrar()">
-    Cadastrar
-  </button>
-
+<button onclick="cadastrar()">Cadastrar</button>
 </div>
 
 <script>
-
-async function cadastrar() {
-
-  const nome = document.getElementById("nome").value.trim();
-  const cpf = document.getElementById("cpf").value.trim();
-  const tipo = document.getElementById("tipo").value;
-
-  if (!nome) {
-    alert("Digite o nome do paciente.");
-    return;
-  }
-
-  if (!cpf) {
-    alert("Digite o CPF do paciente.");
-    return;
-  }
-
-  const botao = document.getElementById("btnCadastrar");
-
-  botao.disabled = true;
-  botao.innerText = "Cadastrando...";
-
-  try {
-
-    const resposta = await fetch("http://localhost:3000/atendimento", {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        nome: nome,
-        cpf: cpf,
-        tipo: tipo
-      })
-    });
-
-    /*
-      Não exigimos resposta JSON do servidor.
-      Isso evita erro caso seu /atendimento
-      retorne texto ou uma resposta vazia.
-    */
-
-    if (!resposta.ok) {
-      throw new Error(
-        "Servidor respondeu com erro " + resposta.status
-      );
-    }
-
-    alert("Paciente cadastrado com sucesso!");
-
-    /*
-      REDIRECIONAMENTO PARA A TRIAGEM
-    */
-    window.location.href = "triagem.html";
-
-  } catch (erro) {
-
-    console.error("Erro no cadastro:", erro);
-
-    alert(
-      "Não foi possível cadastrar o paciente.\n\n" +
-      "Verifique se o servidor está rodando em localhost:3000."
-    );
-
-    botao.disabled = false;
-    botao.innerText = "Cadastrar";
-  }
-
+function cadastrar(){
+ fetch("http://localhost:3000/atendimento",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body: JSON.stringify({
+    nome: nome.value,
+    cpf: cpf.value,
+    tipo: tipo.value
+  })
+ });
+ alert("Paciente enviado para triagem");
 }
-
 </script>
-
 </body>
 </html>
