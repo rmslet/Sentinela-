@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+
 <head>
+  <meta charset="UTF-8">
+  <title>Atendimento</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -11,74 +14,92 @@
   <h2>Atendimento</h2>
 
   <input id="nome" placeholder="Nome">
+
   <input id="cpf" placeholder="CPF">
 
   <select id="tipo">
-    <option>Convenio</option>
-    <option>Particular</option>
+    <option value="Convenio">Convenio</option>
+    <option value="Particular">Particular</option>
   </select>
 
   <input type="file" id="foto">
 
-  <button onclick="cadastrar()">Cadastrar</button>
+  <button id="btnCadastrar" onclick="cadastrar()">
+    Cadastrar
+  </button>
 
 </div>
 
 <script>
 
-function cadastrar() {
+async function cadastrar() {
 
-  const nome = document.getElementById("nome").value;
-  const cpf = document.getElementById("cpf").value;
+  const nome = document.getElementById("nome").value.trim();
+  const cpf = document.getElementById("cpf").value.trim();
   const tipo = document.getElementById("tipo").value;
 
-  if (!nome || !cpf) {
-    alert("Preencha o nome e o CPF.");
+  if (!nome) {
+    alert("Digite o nome do paciente.");
     return;
   }
 
-  fetch("http://localhost:3000/atendimento", {
+  if (!cpf) {
+    alert("Digite o CPF do paciente.");
+    return;
+  }
 
-    method: "POST",
+  const botao = document.getElementById("btnCadastrar");
 
-    headers: {
-      "Content-Type": "application/json"
-    },
+  botao.disabled = true;
+  botao.innerText = "Cadastrando...";
 
-    body: JSON.stringify({
-      nome: nome,
-      cpf: cpf,
-      tipo: tipo
-    })
+  try {
 
-  })
+    const resposta = await fetch("http://localhost:3000/atendimento", {
+      method: "POST",
 
-  .then(response => {
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-    if (!response.ok) {
-      throw new Error("Erro ao cadastrar paciente.");
+      body: JSON.stringify({
+        nome: nome,
+        cpf: cpf,
+        tipo: tipo
+      })
+    });
+
+    /*
+      Não exigimos resposta JSON do servidor.
+      Isso evita erro caso seu /atendimento
+      retorne texto ou uma resposta vazia.
+    */
+
+    if (!resposta.ok) {
+      throw new Error(
+        "Servidor respondeu com erro " + resposta.status
+      );
     }
 
-    return response.json();
+    alert("Paciente cadastrado com sucesso!");
 
-  })
-
-  .then(data => {
-
-    alert("Paciente enviado para triagem");
-
-    // Redireciona para a página de triagem
+    /*
+      REDIRECIONAMENTO PARA A TRIAGEM
+    */
     window.location.href = "triagem.html";
 
-  })
+  } catch (erro) {
 
-  .catch(error => {
+    console.error("Erro no cadastro:", erro);
 
-    console.error("Erro:", error);
+    alert(
+      "Não foi possível cadastrar o paciente.\n\n" +
+      "Verifique se o servidor está rodando em localhost:3000."
+    );
 
-    alert("Erro ao cadastrar o paciente.");
-
-  });
+    botao.disabled = false;
+    botao.innerText = "Cadastrar";
+  }
 
 }
 
