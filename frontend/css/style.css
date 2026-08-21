@@ -1,0 +1,359 @@
+/* ==================================================
+SISTEMA HOSPITALAR
+CSS PRINCIPAL
+================================================== */
+
+/* ==================================================
+CONFIGURAÇÕES GERAIS (TODAS AS PÁGINAS)
+================================================== */
+
+:root {
+
+    --azul: #49735B;
+    --azul-escuro: #3F5F51;
+
+    --verde: #49735B;
+    --amarelo: #f9a825;
+    --vermelho: #c62828;
+
+    --fundo: #8FA694;
+
+    --branco: #3C5949;
+
+    --texto: #ffffff;
+
+    --borda: #6f8d76;
+
+    --sombra: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+    margin:0;
+
+    background:
+    var(--fundo);
+
+    color:
+    var(--texto);
+}
+
+/* ==================================================
+INDEX.HTML
+LOGIN DO SISTEMA
+================================================== */
+
+body.login{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:100vh;
+}
+
+.login .container{
+
+    max-width:420px;
+}
+
+/* ==================================================
+LOGO DO LOGIN
+INDEX.HTML
+================================================== */
+
+.logo-hospital{
+
+    display:block;
+
+    width:300px;
+
+    max-width:200%;
+
+    height:auto;
+
+    margin:0 auto 20px auto;
+
+    object-fit:contain;
+}
+
+/* ==================================================
+ATENDIMENTO.HTML
+================================================== */
+
+.atendimento .container{
+
+    max-width:700px;
+}
+
+.atendimento h2{
+
+    color:rgb(249, 248, 248);
+}
+
+/* ==================================================
+TRIAGEM.HTML
+================================================== */
+
+.triagem .container{
+
+    max-width:750px;
+}
+
+.triagem #resultado{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    font-weight:bold;
+}
+
+/* ==================================================
+MEDICO.HTML
+================================================== */
+
+.medico .container{
+
+    max-width:1000px;
+}
+
+.medico #triagens{
+
+    display:grid;
+
+    gap:20px;
+}
+
+.medico .card{
+
+    cursor:pointer;
+}
+
+/* ==================================================
+MEDICACOES.HTML
+================================================== */
+
+.medicacoes .container{
+
+    max-width:900px;
+}
+
+.medicacoes #listaMedicacoes{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+}
+
+/* ==================================================
+COMPONENTES COMPARTILHADOS
+================================================== */
+
+.container{
+
+    width:92%;
+
+    margin:40px auto;
+
+    background:
+    var(--branco);
+
+    padding:35px;
+
+    border-radius:18px;
+
+    box-shadow:
+    var(--sombra);
+}
+
+h2{
+
+    color:#DFB45B;
+
+    text-align:center;
+
+    font-size:36px;
+
+    font-weight:700;
+
+    border-bottom:2px solid rgba(255,255,255,0.3);
+
+    padding-bottom:12px;
+
+    margin-bottom:25px;
+}
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:13px;
+
+    margin-top:12px;
+
+    border-radius:10px;
+
+    border:
+    1px solid var(--borda);
+
+    background:#ffffff;
+
+    color:#263238;
+
+    font-size:15px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    outline:none;
+
+    border-color:
+    white;
+}
+
+textarea{
+
+    min-height:120px;
+
+    resize:vertical;
+}
+
+button{
+
+    width:100%;
+
+    margin-top:18px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:
+    #ffffff;
+
+    color:#49735B;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+button:hover{
+
+    background:
+    #e8f0ea;
+}
+
+/* ==================================================
+CARDS DE PACIENTES
+================================================== */
+
+.card{
+
+    background:#49735B;
+
+    border:
+    1px solid var(--borda);
+
+    padding:20px;
+
+    border-radius:15px;
+
+    box-shadow:
+    0 5px 15px rgba(0,0,0,0.15);
+}
+
+/* ==================================================
+CORES DE RISCO
+================================================== */
+
+.verde{
+
+    background:
+    #2dd735;
+
+    color:white;
+
+    padding:7px 14px;
+
+    border-radius:20px;
+
+    display:inline-block;
+}
+
+.amarelo{
+
+    background:
+    var(--amarelo);
+
+    color:#e1bd2b;
+
+    padding:7px 14px;
+
+    border-radius:20px;
+
+    display:inline-block;
+}
+
+.vermelho{
+
+    background:
+    var(--vermelho);
+
+    color:rgb(239, 1, 1);
+
+    padding:7px 14px;
+
+    border-radius:20px;
+
+    display:inline-block;
+}
+
+/* ==================================================
+CELULAR
+================================================== */
+
+@media(max-width:600px){
+
+.container{
+
+    width:95%;
+
+    padding:22px;
+}
+
+.logo-hospital{
+    width:220px;
+}
+
+h2{
+    font-size:28px;
+}
+
+}
