@@ -5,8 +5,29 @@
 <div class="container">
 <h2>Atendimento</h2>
 
-<input id="nome" placeholder="Nome">
-<input id="cpf" placeholder="CPF">
+<input id="nome" placeholder="Nome completo">
+<input id="cpf" placeholder="CPF/RG/ou outro documento" maxlength="14">
+<input id="dataNascimento" type="date" placeholder="Data de nascimento">
+
+<select id="sexo">
+  <option>Masculino</option>
+  <option>Feminino</option>
+  <option>Prefiro não informar</option>
+</select>
+
+<input id="nomeMae" placeholder="Nome da mãe">
+
+<select id="estadoCivil">
+  <option>Casado</option>
+  <option>Solteiro</option>
+  <option>Amasiado</option>
+  <option>Viúvo</option>
+</select>
+
+<input id="endereco" placeholder="Endereço">
+<input id="telefone" placeholder="Telefone">
+<input id="email" type="email" placeholder="E-mail">
+<input id="contatoEmergencia" placeholder="Contato de emergência">
 
 <select id="tipo">
   <option>Convenio</option>
@@ -19,18 +40,40 @@
 </div>
 
 <script>
+cpf.addEventListener("input", function() {
+  let valor = cpf.value.replace(/\D/g, "");
+
+  if (valor.length > 11) {
+    valor = valor.substring(0, 11);
+  }
+
+  valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+  valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+  valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+  cpf.value = valor;
+});
+
 function cadastrar(){
- fetch("http://localhost:3000/atendimento",{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body: JSON.stringify({
-    nome: nome.value,
-    cpf: cpf.value,
-    tipo: tipo.value
-  })
- });
- alert("Paciente enviado para triagem");
-}
-</script>
-</body>
+ fetch("http://localhost:3000/atendimento", { 
+  method:"POST", 
+  headers:{"Content-Type":"application/json"}, 
+  body: JSON.stringify({ 
+    nome: nome.value, 
+    cpf: cpf.value, 
+    dataNascimento: dataNascimento.value,
+    sexo: sexo.value,
+    nomeMae: nomeMae.value,
+    estadoCivil: estadoCivil.value,
+    endereco: endereco.value,
+    telefone: telefone.value,
+    email: email.value,
+    contatoEmergencia: contatoEmergencia.value,
+    tipo: tipo.value 
+  }) 
+ }); 
+ alert("Paciente enviado para triagem"); 
+} 
+</script> 
+</body> 
 </html>
